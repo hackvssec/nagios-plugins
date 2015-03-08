@@ -27,7 +27,7 @@ function calculate_days_till_expiry {
         get_expiry_date=$(sudo /usr/bin/chage -l $1 | grep 'Password expires' | cut -d: -f2)
         if [[ $get_expiry_date = ' never' || $get_expiry_date = 'never' ]]
         then
-            echo "[$1 - Password never expires]  "
+            echo -n "[$1 - Password never expires]  "
             chage_exit_status 0
         elif
             password_expiry_date=`date -d "$get_expiry_date" "+%s"`
@@ -37,19 +37,19 @@ function calculate_days_till_expiry {
             then
             if (($DAYS>=10))
             then
-                echo "[$1 - OK - Password is $DAYS days from expiry]  "
+                echo -n "[$1 - OK - Password is $DAYS days from expiry]  "
                 chage_exit_status 0
             elif (($DAYS>=5 && $DAYS<=9))
             then
-                echo "[$1 - WARNING - Password is $DAYS days from expiry]  "
+                echo -n "[$1 - WARNING - Password is $DAYS days from expiry]  "
                 chage_exit_status 1
             elif (($DAYS>=0 && $DAYS<=4))
             then
-                echo "[$1 - CRITICAL - Password is $DAYS days from expiry]  "
+                echo -n "[$1 - CRITICAL - Password is $DAYS days from expiry]  "
                 chage_exit_status 2
             elif (($DAYS<=0))
             then
-                echo "[$1 - CRITICAL - The password has expired]  "
+                echo -n "[$1 - CRITICAL - The password has expired]  "
                 chage_exit_status 2
             fi
         fi
@@ -65,4 +65,3 @@ for user in `cat /etc/passwd | grep /bin/bash | cut -d: -f1`;do
 done
 
 exit $EXIT_STATUS
-
