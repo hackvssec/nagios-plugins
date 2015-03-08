@@ -7,8 +7,9 @@
 4天以内     紧急<br />
 已过期      紧急<br />
 <br />
-### 依赖如下命令：
-visudo  <br />
-> nagios ALL=NOPASSWD: /usr/bin/chage -l *
-> nrpe ALL=NOPASSWD: /usr/bin/chage -l *
-> Defaults:nrpe !requiretty
+### 依赖：
+我们需要为nagios和nrpe用户提权，用"visudo"命令来编辑/etc/sudoers,  <br />
+> nagios ALL=NOPASSWD: /usr/bin/chage -l * <br />
+> nrpe ALL=NOPASSWD: /usr/bin/chage -l * <br />
+> Defaults:nrpe !requiretty <br />
+"wq"保存退出即可。
